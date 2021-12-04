@@ -127,11 +127,11 @@ const optionsJourneyBack = {
 };
 
 const hafas = createClient(dbProfile, 'my-awesome-program')
-hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(({journeys}) => {
-    let journeysThere = toRoutes(journeys);
+hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(journeysThere => {
+    let routesThere = toRoutes(journeysThere.journeys);
 
-    hafas.journeys(toStationId, fromStationId, optionsJourneyBack).then(({journeys}) => {
-        let journeysBack = toRoutes(journeys);
+    hafas.journeys(toStationId, fromStationId, optionsJourneyBack).then(journeysBack => {
+        let routesBack = toRoutes(journeysBack.journeys);
 
         console.log("Von:")
         console.log("  " + fromStation)
@@ -171,9 +171,9 @@ hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(({journeys}
             "--------")
 
         const comparisons = [];
-        journeysThere.forEach(journeyThere => {
-            journeysBack.forEach(journeyBack => {
-                comparisons.push(journeyThere.compare(journeyBack));
+        routesThere.forEach(routeThere => {
+            routesBack.forEach(routeBack => {
+                comparisons.push(routeThere.compare(routeBack));
             })
         })
 
@@ -188,14 +188,12 @@ function toRoutes(journeys) {
         let lastLeg = journey.legs[journey.legs.length - 1];
         let firstLeg = journey.legs[0];
 
-        let route = new Route(
+        return new Route(
             new Date(firstLeg.departure ?? firstLeg.plannedDeparture),
             new Date(lastLeg.arrival ?? lastLeg.plannedArrival),
             journey.legs.length - 1,
             journey.price.amount
         );
-        // console.log(util.inspect(journey, { depth: null }));
-        return route;
     })
 }
 
