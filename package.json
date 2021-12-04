@@ -1,0 +1,14 @@
+{
+  "name": "bahn-reiseauskunft",
+  "version": "1.0.0",
+  "description": "Oder: HTML ist halt auch nur XML.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hafas-client": "^5.21.1"
+  }
+}
