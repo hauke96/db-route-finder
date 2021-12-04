@@ -11,14 +11,18 @@ const greenFormat = '\x1b[1;32m%s\x1b[0m';
 const grayFormat = '\x1b[0;31m%s\x1b[0m';
 const noColorFormat = '%s';
 
-const fromStation = 'Hamburg Hbf';
-const toStation = 'Fulda';
-const fromStationId = stationen[fromStation];
-const toStationId = stationen[toStation];
+let fromStation = 'Hamburg Hbf';
+let toStation = 'Fulda';
+let fromStationId = stationen[fromStation];
+let toStationId = stationen[toStation];
+
+let departureThereString = '2021-12-20T07:00:00';
+let departureBackString = '2021-12-20T15:00:00';
+let departureThereTime = new Date(departureThereString);
+let departureBackTime = new Date(departureBackString);
+
 const minimumTimeTillBack = 300; // 5 hours
 const maximumPrice = 45;
-const departureThereString = '2021-12-20T07:00:00';
-const departureBackString = '2021-12-20T15:00:00';
 const loyaltyCardConfig = {type: data.BAHNCARD, discount: 25};
 const transferTime = 15;
 
@@ -113,14 +117,49 @@ class RouteComparison {
     }
 }
 
+let args = process.argv.slice(2);
+
+if(args[0] === "--help" || args[0] === "-h") {
+    printHelp();
+    process.exit(0)
+}
+
+fromStation = args[0];
+fromStationId = stationen[fromStation];
+if(!fromStationId) {
+    console.error("Station of journey there not found.")
+    process.exit(1)
+}
+
+departureThereString = args[1]
+departureThereTime = new Date(departureThereString)
+if(!(departureThereTime instanceof Date) || isNaN(departureThereTime)) {
+    console.error("Departure time of journey there invalid.")
+    process.exit(1)
+}
+
+toStation = args[2];
+toStationId = stationen[toStation];
+if(!toStationId) {
+    console.error("Station of journey back not found.")
+    process.exit(1)
+}
+
+departureBackString = args[3]
+departureBackTime = new Date(departureBackString)
+if(!(departureBackTime instanceof Date) || isNaN(departureBackTime)) {
+    console.error("Departure time of journey back invalid.")
+    process.exit(1)
+}
+
 const optionsJourneyThere = {
-    departure: new Date(departureThereString),
+    departure: departureThereTime,
     results: 5,
     transferTime: transferTime,
     loyaltyCard: loyaltyCardConfig
 };
 const optionsJourneyBack = {
-    departure: new Date(departureBackString),
+    departure: departureBackTime,
     results: 5,
     transferTime: transferTime,
     loyaltyCard: {type: data.BAHNCARD, discount: 25}
@@ -135,11 +174,11 @@ hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(journeysThe
 
         console.log("Von:")
         console.log("  " + fromStation)
-        console.log("  Abfahrt hin am " + new Date(departureThereString).toLocaleDateString() + " ab " + new Date(departureThereString).toLocaleTimeString())
+        console.log("  Abfahrt hin am " + departureThereTime.toLocaleDateString() + " ab " + departureThereTime.toLocaleTimeString())
 
         console.log("Nach:")
         console.log("  " + toStation)
-        console.log("  Abfahrt zurück am " + new Date(departureBackString).toLocaleDateString() + " ab " + new Date(departureBackString).toLocaleTimeString())
+        console.log("  Abfahrt zurück am " + departureBackTime.toLocaleDateString() + " ab " + departureBackTime.toLocaleTimeString())
 
         console.log("Mit BC 25   : " + (loyaltyCardConfig?.discount ? "Ja" : "Nein"));
         console.log("Umsteigezeit: " + transferTime + " Minuten");
@@ -208,4 +247,17 @@ function minutesToHourString(minutes) {
 
 function padZero(data) {
     return ("" + data).padStart(2, "0")
+}
+
+function printHelp() {
+    console.log("Usage: node index.js <from> <from-departure> <to> <to-departure>")
+    console.log(    )
+    console.log("Parameters:")
+    console.log("  from             The Station name where your journey starts.")
+    console.log("  from-departure   The earliest time you are willing to depart.")
+    console.log("  to               The Station you want to go to.")
+    console.log("  to-departure     The earliest time you want to head back home.")
+    console.log()
+    console.log("Example:")
+    console.log("  node index.js \"Hamburg Hbf\" \"2021-12-14 07:23\" Fulda \"2021-12-14 14:50\"")
 }
