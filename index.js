@@ -52,7 +52,7 @@ hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(journeysThe
 
         const minPrice = Math.min(...comparisons.filter(c => c.notices.length === 0).map(c => c.price))
 
-        comparisons.forEach(c => c.print(minPrice));
+        comparisons.forEach((c, i) => c.print(i, minPrice));
     })
 })
 
@@ -75,7 +75,9 @@ function printInfos() {
 
 function printHeader() {
     let sep = " | ";
-    console.log("Abfahrt hin" + sep +
+    console.log(
+        "Nr." + sep +
+        "Abfahrt hin" + sep +
         "Ankunft hin" + sep +
         "Umsteige" + sep +
         "Abfahrt rück" + sep +
@@ -86,7 +88,9 @@ function printHeader() {
         "Preis".padStart(7) + " | Hinweise")
 
     let sepLine = "-|-";
-    console.log("".padStart(11, "-") + sepLine +
+    console.log(
+        "".padStart(3, "-") + sepLine +
+        "".padStart(11, "-") + sepLine +
         "".padStart(11, "-") + sepLine +
         "".padStart(8, "-") + sepLine +
         "".padStart(12, "-") + sepLine +

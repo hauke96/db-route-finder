@@ -61,7 +61,7 @@ class RouteComparison {
         }
     }
 
-    print(minPrice) {
+    print(index, minPrice) {
         const travelTimeString = minutesToHourString(this.travelTime).padStart(9);
         const timeTillBackString = minutesToHourString(this.timeTillBackJourney).padStart(12);
         const priceString = (this.price.toFixed(2) + "").padStart(5)
@@ -84,6 +84,7 @@ class RouteComparison {
 
         let sep = " | ";
         console.log(colorFormat,
+            ("" + index).padStart(3) + sep +
             departureThereString + sep +
             arrivalThereString + sep +
             transfersThere + sep +
