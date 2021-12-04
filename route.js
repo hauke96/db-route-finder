@@ -64,7 +64,7 @@ class RouteComparison {
     print(minPrice) {
         const travelTimeString = minutesToHourString(this.travelTime).padStart(9);
         const timeTillBackString = minutesToHourString(this.timeTillBackJourney).padStart(12);
-        const priceString = (this.price + "").padStart(5)
+        const priceString = (this.price.toFixed(2) + "").padStart(5)
         const priceSuffix = minPrice === this.price ? " *" : "  ";
 
         let departureThereString = (padZero(this.departure.getHours()) + ":" + padZero(this.departure.getMinutes())).padStart(11);
