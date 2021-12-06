@@ -1,4 +1,4 @@
-stationen = new Object();
+export const stationen = new Object();
 
 stationen["Hamburg Elbbrücken"] = "8002551";
 stationen["Eutingen Nord"] = "8001944";
@@ -6642,5 +6642,3 @@ stationen["Böblingen Heusteigstr"] = "8085007";
 stationen["Böblingen Südbf"] = "8085006";
 stationen["Böblingen Zimmerschlag"] = "8085008";
 stationen["Holzgerlingen Hülben"] = "8085009";
-
-module.exports = stationen;

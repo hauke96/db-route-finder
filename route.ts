@@ -1,4 +1,4 @@
-const {millisToMinutes, minutesToHourString, padZero} = require("./util");
+import {millisToMinutes, minutesToHourString, padZero} from "./util";
 
 const greenFormat = '\x1b[1;32m%s\x1b[0m';
 const grayFormat = '\x1b[0;31m%s\x1b[0m';
@@ -8,12 +8,8 @@ const noColorFormat = '%s';
 const minimumTimeTillBack = 300; // 5 hours
 const maximumPrice = 45;
 
-class Route {
-    constructor(departure, arrival, transfers, price) {
-        this.departure = departure;
-        this.arrival = arrival;
-        this.transfers = transfers;
-        this.price = price;
+export class Route {
+    constructor(public departure, public arrival, public transfers, public price) {
     }
 
     // Travel time in minutes
@@ -21,7 +17,7 @@ class Route {
         return millisToMinutes(this.arrival - this.departure)
     }
 
-    compare(otherJourney) {
+    compare(otherJourney: Route) {
         const travelTime = this.travelTime() + otherJourney.travelTime();
         const timeTillBackJourney = millisToMinutes(otherJourney.departure - this.arrival);
         const price = this.price + otherJourney.price;
@@ -38,20 +34,18 @@ class Route {
     }
 }
 
-class RouteComparison {
-    constructor(departure, arrival, transfersThere, departureBack, arrivalBack, transfersBack, travelTime, timeTillBackJourney, price) {
-        this.departure = departure;
-        this.arrival = arrival;
-        this.transfersThere = transfersThere;
+export class RouteComparison {
+    public notices: string[];
 
-        this.departureBack = departureBack;
-        this.arrivalBack = arrivalBack;
-        this.transfersBack = transfersBack;
-
-        this.travelTime = travelTime;
-        this.timeTillBackJourney = timeTillBackJourney;
-        this.price = price;
-
+    constructor(public departure,
+                public arrival,
+                public transfersThere,
+                public departureBack,
+                public arrivalBack,
+                public transfersBack,
+                public travelTime,
+                public timeTillBackJourney,
+                public price) {
         this.notices = [];
         if (this.timeTillBackJourney < minimumTimeTillBack) {
             this.notices.push("Zu wenig Zeit");
@@ -100,7 +94,7 @@ class RouteComparison {
     }
 }
 
-function toRoutes(journeys) {
+export function toRoutes(journeys): Route[] {
     return journeys.map(journey => {
         let lastLeg = journey.legs[journey.legs.length - 1];
         let firstLeg = journey.legs[0];
@@ -112,10 +106,4 @@ function toRoutes(journeys) {
             journey.price.amount
         );
     })
-}
-
-module.exports = {
-    Route,
-    RouteComparison,
-    toRoutes
 }

@@ -1,6 +1,6 @@
-const stationen = require("./stationen");
+import {stationen} from './stationen';
 
-function parseCliArguments() {
+export function parseCliArguments() {
     let args = process.argv.slice(2);
 
     if (args[0] === "--help" || args[0] === "-h") {
@@ -17,6 +17,7 @@ function parseCliArguments() {
 
     const departureThereString = args[1]
     const departureThereTime = new Date(departureThereString)
+    // @ts-ignore
     if (!(departureThereTime instanceof Date) || isNaN(departureThereTime)) {
         console.error("Departure time of journey there invalid.")
         process.exit(1)
@@ -31,6 +32,7 @@ function parseCliArguments() {
 
     const departureBackString = args[3]
     const departureBackTime = new Date(departureBackString)
+    // @ts-ignore
     if (!(departureBackTime instanceof Date) || isNaN(departureBackTime)) {
         console.error("Departure time of journey back invalid.")
         process.exit(1)
@@ -47,7 +49,7 @@ function parseCliArguments() {
 }
 
 function printHelp() {
-    console.log("Usage: node index.js <from> <from-departure> <to> <to-departure>")
+    console.log("Usage: npx tsc index.ts <from> <from-departure> <to> <to-departure>")
     console.log(    )
     console.log("Parameters:")
     console.log("  from             The Station name where your journey starts.")
@@ -56,9 +58,5 @@ function printHelp() {
     console.log("  to-departure     The earliest time you want to head back home.")
     console.log()
     console.log("Example:")
-    console.log("  node index.js \"Hamburg Hbf\" \"2021-12-14 07:23\" Fulda \"2021-12-14 14:50\"")
-}
-
-module.exports = {
-    parseCliArguments
+    console.log("  npx tsc index.ts \"Hamburg Hbf\" \"2021-12-14 07:23\" Fulda \"2021-12-14 14:50\"")
 }

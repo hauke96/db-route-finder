@@ -1,8 +1,8 @@
-const createClient = require('hafas-client')
-const dbProfile = require('hafas-client/p/db')
-const data = require('hafas-client/p/db/loyalty-cards').data
-const {toRoutes} = require("./route");
-const {parseCliArguments} = require("./cli");
+import createClient from 'hafas-client';
+import dbProfile from 'hafas-client/p/db';
+import data from 'hafas-client/p/db/loyalty-cards';
+import {RouteComparison, toRoutes} from './route';
+import {parseCliArguments} from './cli';
 
 // API documentation of the hafas-client:
 // https://github.com/public-transport/hafas-client/blob/master/docs/journeys.md
@@ -43,7 +43,7 @@ hafas.journeys(fromStationId, toStationId, optionsJourneyThere).then(journeysThe
 
         printHeader();
 
-        const comparisons = [];
+        const comparisons: RouteComparison[] = [];
         routesThere.forEach(routeThere => {
             routesBack.forEach(routeBack => {
                 comparisons.push(routeThere.compare(routeBack));
