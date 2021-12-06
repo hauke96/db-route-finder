@@ -3,7 +3,7 @@
 A tool to find optiomaoptimal routes from A to B and B to A.
 
 <p align="center">
-<img src="screenshots.png" alt="DB route finder screenshot"/>
+<img src="screenshot.png" alt="DB route finder screenshot"/>
 </p>
 
 An optimal route should fulfill certain properties:
