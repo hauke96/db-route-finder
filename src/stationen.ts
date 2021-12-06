@@ -1,4 +1,4 @@
-export const stationen = new Object();
+export const stationen: { [name: string]: string } = {};
 
 stationen["Hamburg Elbbrücken"] = "8002551";
 stationen["Eutingen Nord"] = "8001944";

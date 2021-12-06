@@ -38,6 +38,7 @@ export function parseCliArguments() {
         process.exit(1)
     }
 
+    // TODO Extract into class.
     return {
         fromStation,
         fromStationId,
@@ -48,9 +49,9 @@ export function parseCliArguments() {
     }
 }
 
-function printHelp() {
+function printHelp(): void {
     console.log("Usage: npx tsc index.ts <from> <from-departure> <to> <to-departure>")
-    console.log(    )
+    console.log()
     console.log("Parameters:")
     console.log("  from             The Station name where your journey starts.")
     console.log("  from-departure   The earliest time you are willing to depart.")

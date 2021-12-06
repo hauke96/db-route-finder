@@ -13,6 +13,7 @@
     "hafas-client": "^5.21.1"
   },
   "devDependencies": {
+    "@types/hafas-client": "^5.12.1",
     "typescript": "^4.5.2"
   }
 }
