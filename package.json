@@ -1,13 +1,13 @@
 {
   "name": "bahn-reiseauskunft",
   "version": "1.0.0",
-  "description": "Oder: HTML ist halt auch nur XML.",
+  "description": "A simple tools helping to find optimal routes using the DB (Deutsche Bahn) API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Hauke Stieler",
+  "license": "GPL-3.0",
   "dependencies": {
     "hafas-client": "^5.21.1"
   }
