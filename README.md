@@ -13,9 +13,14 @@ An optimal route should fulfill certain properties:
 * The price should be minimal
 * The exact departure and arrival times are irrelevant as long as all above properties are fulfilled
 
+# Getting started
+
+1. Clone this repo
+2. Install dependencies: `npm i`
+
 # Usage
 
-`node index.ts <from> <from-departure> <to> <to-departure>`
+`npm run start <from> <from-departure> <to> <to-departure>`
 
 * `from`: The Station name where your journey starts.
 * `from-departure`: The earliest time you are willing to depart.
@@ -24,10 +29,10 @@ An optimal route should fulfill certain properties:
 
 ## Example
 
-`node index.ts "Hamburg Hbf" "2021-12-14 07:23" Fulda "2021-12-14 14:50"`
+`npm run start "Hamburg Hbf" "2021-12-14 07:23" Fulda "2021-12-14 14:50"`
 
 ## Help
 
 To print helping information:
 
-`node index.ts --help`
+`npm run start -- --help`
