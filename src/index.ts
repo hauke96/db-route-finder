@@ -2,12 +2,13 @@ import createClient from 'hafas-client';
 import dbProfile from 'hafas-client/p/db';
 import {Route, RouteComparison, toRoutes} from './route';
 import {parseCliArguments} from './cli';
-import {LoyaltyCard, LoyaltyCardType} from "hafas-client/p/db/loyalty-cards";
+// @ts-ignore
+import {data as loyaltyCards} from 'hafas-client/p/db/loyalty-cards';
 
 // API documentation of the hafas-client:
 // https://github.com/public-transport/hafas-client/blob/master/docs/journeys.md
 
-const loyaltyCardConfig = {type: LoyaltyCardType.BAHNCARD, discount: 25} as LoyaltyCard;
+const loyaltyCardConfig = {type: loyaltyCards.BAHNCARD, discount: 25};
 const transferTime = 15;
 
 const cliArguments = parseCliArguments();
