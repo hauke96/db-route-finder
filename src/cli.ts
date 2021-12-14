@@ -31,11 +31,17 @@ export function parseCliArguments() {
     }
 
     const departureBackString = args[3]
-    const departureBackTime = new Date(departureBackString)
-    // @ts-ignore
-    if (!(departureBackTime instanceof Date) || isNaN(departureBackTime)) {
-        console.error("Departure time of journey back invalid.")
-        process.exit(1)
+    let departureBackTime: Date;
+    if(!!departureBackString && departureBackString !== "") {
+        departureBackTime = new Date(departureBackString)
+        // @ts-ignore
+        if (!(departureBackTime instanceof Date) || isNaN(departureBackTime)) {
+            console.error("Departure time of journey back invalid.")
+            process.exit(1)
+        }
+    }else {
+        departureBackTime = new Date(departureThereTime.getTime());
+        departureBackTime.setHours(16);
     }
 
     // TODO Extract into class.
@@ -50,13 +56,15 @@ export function parseCliArguments() {
 }
 
 function printHelp(): void {
-    console.log("Usage: npx tsc index.ts <from> <from-departure> <to> <to-departure>")
+    console.log("Usage: npx tsc index.ts <from> <from-departure> <to> [to-departure]")
     console.log()
     console.log("Parameters:")
     console.log("  from             The Station name where your journey starts.")
     console.log("  from-departure   The earliest time you are willing to depart.")
     console.log("  to               The Station you want to go to.")
-    console.log("  to-departure     The earliest time you want to head back home.")
+    console.log()
+    console.log("Optional:")
+    console.log("  to-departure     The earliest time you want to head back home. If not present, the `from-departure` day will be used at 4pm.")
     console.log()
     console.log("Example:")
     console.log("  npx tsc index.ts \"Hamburg Hbf\" \"2021-12-14 07:23\" Fulda \"2021-12-14 14:50\"")

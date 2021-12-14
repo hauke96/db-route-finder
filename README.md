@@ -25,11 +25,13 @@ An optimal route should fulfill certain properties:
 * `from`: The Station name where your journey starts.
 * `from-departure`: The earliest time you are willing to depart.
 * `to`: The Station you want to go to.
-* `to-departure`: The earliest time you want to head back home.
+* `to-departure`: Optional: The earliest time you want to head back home. If not present, the `from-departure` day will be used at 4pm.
 
 ## Example
 
 `npm run start "Hamburg Hbf" "2021-12-14 07:23" Fulda "2021-12-14 14:50"`
+
+`npm run start "Hamburg Hbf" "2021-12-14 07:23" Fulda` which is equivalent to `npm run start "Hamburg Hbf" "2021-12-14 07:23" Fulda "2021-12-14 16:00"`
 
 ## Help
 
